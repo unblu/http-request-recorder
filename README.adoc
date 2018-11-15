@@ -1,0 +1,46 @@
+//tag::vardef[]
+:gh-repo-owner: unblu
+:gh-repo-name: http-request-recorder
+:project-name: HTTP Request Recorder
+:branch: master
+:twitter-handle: j2r2b
+:license: https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html
+:license-name: Eclipse Public License - v 2.0
+
+:git-repository: {gh-repo-owner}/{gh-repo-name}
+:homepage: https://{gh-repo-owner}.github.io/{gh-repo-name}/
+:issues: https://github.com/{git-repository}/issues
+//end::vardef[]
+
+//tag::header[]
+= {project-name}
+:author: Jeremie Bresson
+:revnumber: 1.0.0
+
+Simple jetty server to record HTTP requests.
+//end::header[]
+
+//tag::description[]
+== Description
+
+`http-request-recorder` is a small tool that can be used to record HTTP requests.
+It is based on Eclipse Jetty and runs on the JVM.
+Recorded requests are available as JavaRx stream or can be serialized as JSON files.
+
+//end::description[]
+Read more on the link:{homepage}[project home page].
+
+//tag::contact-section[]
+== Get in touch
+
+Use the link:{issues}[issue tracker] on GitHub.
+
+You can also contact me on Twitter: link:https://twitter.com/{twitter-handle}[@{twitter-handle}]
+//end::contact-section[]
+
+//tag::license-section[]
+== License
+
+Code is under link:{license}[{license-name}].
+Documentation and slides are under the link:https://creativecommons.org/licenses/by-sa/4.0/[Creative Commons BY-SA 4.0]
+//end::license-section[]
