@@ -1,4 +1,5 @@
 bin/
+build/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -9,7 +10,6 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-todoapp_client/out/
-
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+/.gradle/

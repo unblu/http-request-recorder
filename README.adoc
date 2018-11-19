@@ -24,8 +24,8 @@ Simple jetty server to record HTTP requests.
 == Description
 
 `http-request-recorder` is a small tool that can be used to record HTTP requests.
-It is based on Eclipse Jetty and runs on the JVM.
-Recorded requests are available as JavaRx stream or can be serialized as JSON files.
+It is based on link:https://www.eclipse.org/jetty/[Eclipse Jetty] and runs on the JVM.
+Recorded requests are available in memory (as RxJava stream), can be printed in the console or stored as JSON file on the disk.
 
 //end::description[]
 Read more on the link:{homepage}[project home page].
@@ -42,5 +42,4 @@ You can also contact me on Twitter: link:https://twitter.com/{twitter-handle}[@{
 == License
 
 Code is under link:{license}[{license-name}].
-Documentation and slides are under the link:https://creativecommons.org/licenses/by-sa/4.0/[Creative Commons BY-SA 4.0]
 //end::license-section[]

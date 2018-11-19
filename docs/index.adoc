@@ -16,7 +16,156 @@ TIP: Do you want to improve this page? Please git-link:self[edit it on GitHub, e
 
 include::{github-readme}[tags=description]
 
-TODO add the documentation
+== Usage
+
+=== cli
+
+You can start the server with:
+
+----
+java -jar libs/hrr.jar --log
+----
+
+Some usefull flags:
+
+`--log`: each request will be logged into the console 
+
+`--port`: a fixed port for the server will be used
+
+`--output`: stores each request as json file (see example bellow).
+The `--tree` flag can be usefull to influence the way the files are stored.
+
+==== Usage example:
+
+Started with:
+
+----
+java -jar libs/hrr.jar --port 8090 --output out
+----
+
+For following requests:
+
+----
+GET http://localhost:8090/service1/ping
+POST http://localhost:8090/service1/ping
+POST http://localhost:8090/service1/check
+GET http://localhost:8090/service2
+----
+
+You will get one file per request in the `out/` folder:
+
+----
+out/1542289573057-service1_ping.json
+out/1542289576028-service1_ping.json
+out/1542289591111-service1_check.json
+out/1542289607227-service2.json
+----
+
+With the `--tree` flag the requested URI is used to separate the files in subfolders that correspond to the file.
+The same requests will produce:
+
+----
+out
+|____service1
+| |____ping
+| | |____1542289573057.json
+| | |____1542289576028.json
+| |____check
+|   |____1542289591111.json
+|____service2
+  |____1542289607227.json
+----
+
+==== Help:
+
+You can see the list of the flags with:
+
+```
+java -jar libs/hrr.jar --help
+```
+
+=== core
+
+The `core` can be embedded in an other java application (for example when used during some unit-tests).
+
+Just include `com.unblu.tools:http-request-recorder-core:$hrrVersion` as test dependency.
+
+With `server` being a `com.unblu.tools.hrr.core.JettyServer` instance (that is created and started before the test execution and stopped after the test), a simple test can look like this:
+
+[source,java,indent=0]
+----
+include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=example]
+----
+
+With JUnit 5 the server can be managed like this (this is only one example, you might prefer to manage the server globally somewhere else)
+
+[source,java,indent=0]
+.Start the server before all tests in the class.
+----
+include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=start]
+----
+
+[source,java,indent=0]
+.Stop the server after all tests in the class.
+----
+include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=stop]
+----
+
+== Development
+
+This project is tested with Eclipse IDE, it should however work with any other IDE as well.
+
+=== Build
+
+Build sources:
+
+----
+./gradlew build
+----
+
+Deploy to maven local:
+
+----
+./gradlew publishToMavenLocal
+----
+
+Build the documentation page:
+
+----
+mvn verify
+----
+
+The page is created under `target/generated-docs/index.html`.
+
+Upload the documentation page on GitHub pages:
+
+----
+mvn exec:exec
+----
+
+To be able to push commits on the `gh-pages` branch, a token is requested.
+It needs to be stored in the maven `setting.xml` file.
+
+[source,xml]
+----
+<settings>
+  <servers>
+    <server>
+      <id>github</id>
+      <password><!--github token--></password>
+    </server>
+  </servers>
+</settings>
+----
+
+=== Run the cli using Gradle
+
+To run the `cli` project using gradle:
+
+----
+./gradlew cli:run --args ' --port 8090 --log'
+./gradlew cli:run --args ' --help'
+----
 
 include::{github-readme}[tags=contact-section]
 

@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = 'com.unblu.tools.hrr.cli.Main'
+
+dependencies {
+    compile 'info.picocli:picocli:3.5.2'
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+    compile project(':core')
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+shadowJar {
+    archiveName = "hrr.jar"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'http-request-recorder-cli'
+
+            from components.java
+            artifact sourcesJar
+
+            artifact shadowJar {
+                classifier = "all"
+            }
+        }
+    }
+}
