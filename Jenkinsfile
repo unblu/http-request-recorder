@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh './gradlew clean build'
                 junit '**/build/test-results/**/*.xml'
-                archiveArtifacts artifacts: 'build/libs/*.jar'
+                archiveArtifacts artifacts: 'cli/build/libs/hrr.jar'
             }
         }
     }
