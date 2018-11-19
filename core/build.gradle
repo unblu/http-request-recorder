@@ -20,7 +20,7 @@ dependencies {
     testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     //workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=538956
     testRuntime "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion"
-    
+
     testRuntime "ch.qos.logback:logback-classic:$logbackVersion"
 }
 
@@ -38,4 +38,8 @@ publishing {
             artifact sourcesJar
         }
     }
+}
+
+test {
+    useJUnitPlatform()
 }
