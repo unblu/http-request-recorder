@@ -523,6 +523,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel1">
 <li><a href="#urls">URLs</a></li>
 <li><a href="#description">Description</a></li>
+<li><a href="#download">Download</a></li>
 <li><a href="#usage">Usage</a>
 <ul class="sectlevel2">
 <li><a href="#cli">cli</a></li>
@@ -560,6 +561,9 @@ table.CodeRay td.code>pre{padding:0}
 <p><a href="https://github.com/unblu/http-request-recorder">GitHub project</a></p>
 </li>
 <li>
+<p><a href="https://bintray.com/unblu/releases/http-request-recorder">Binaries on Bintray</a></p>
+</li>
+<li>
 <p><a href="https://github.com/unblu/http-request-recorder/issues">Issue tracker</a></p>
 </li>
 </ul>
@@ -585,6 +589,69 @@ Do you want to improve this page? Please <a href="https://github.com/unblu/http-
 <p><code>http-request-recorder</code> is a small tool that can be used to record HTTP requests.
 It is based on <a href="https://www.eclipse.org/jetty/">Eclipse Jetty</a> and runs on the JVM.
 Recorded requests are available in memory (as RxJava stream), can be printed in the console or stored as JSON file on the disk.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="download"><a class="anchor" href="#download"></a>Download</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Binaries are hosted on bintray: <a href="https://bintray.com/unblu/releases/http-request-recorder">http-request-recorder</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can download a all-in-one jar: <a href="https://dl.bintray.com/unblu/releases/com/unblu/tools/http-request-recorder-cli/1.0.0/http-request-recorder-cli-1.0.0-all.jar">http-request-recorder-cli-1.0.0-all.jar</a>.
+In the example provided in the "Usage" section, it stored as <code>hrr.jar</code> file locally.</p>
+</div>
+<div class="paragraph">
+<p>The artifacts are hosted on following maven repository:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>https://dl.bintray.com/unblu/releases/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Coordinates:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>com.unblu.tools:http-request-recorder-core:1.0.0</code>: core module that can be included in other java application</p>
+</li>
+<li>
+<p><code>com.unblu.tools:http-request-recorder-cli:1.0.0</code>: command line interface module (dependencies not included in the jar)</p>
+</li>
+<li>
+<p><code>com.unblu.tools:http-request-recorder-cli:1.0.0:all</code>: all-in-one jar that can be used to run on the command line</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The repository can be added to a maven build with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;repositories&gt;</span>
+    <span class="tag">&lt;repository&gt;</span>
+        <span class="tag">&lt;id&gt;</span>unblu-releases<span class="tag">&lt;/id&gt;</span>
+        <span class="tag">&lt;url&gt;</span>https://dl.bintray.com/unblu/releases/<span class="tag">&lt;/url&gt;</span>
+        <span class="tag">&lt;releases&gt;</span><span class="tag">&lt;enabled&gt;</span>true<span class="tag">&lt;/enabled&gt;</span><span class="tag">&lt;/releases&gt;</span>
+        <span class="tag">&lt;snapshots&gt;</span><span class="tag">&lt;enabled&gt;</span>false<span class="tag">&lt;/enabled&gt;</span><span class="tag">&lt;/snapshots&gt;</span>
+    <span class="tag">&lt;/repository&gt;</span>
+<span class="tag">&lt;/repositories&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The repository can be added to gradle with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">repositories {
+    maven {
+        url <span class="string"><span class="delimiter">&quot;</span><span class="content">https://dl.bintray.com/unblu/releases/</span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -762,6 +829,14 @@ observable.test().assertSubscribed().assertNoErrors().assertValueCount(<span cla
 </div>
 </div>
 <div class="paragraph">
+<p>Perform a release: (<a href="https://superuser.com/a/990447/">using <code>ssh-agent</code></a> might be requested)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./gradlew release -Prelease.useAutomaticVersion=true</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Build the documentation page:</p>
 </div>
 <div class="listingblock">
@@ -834,7 +909,7 @@ It needs to be stored in the maven <code>setting.xml</code> file.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2018-11-19 11:35:02 CET
+Last updated 2018-11-19 15:10:12 CET
 </div>
 </div>
 </body>
