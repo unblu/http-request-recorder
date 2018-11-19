@@ -37,4 +37,13 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            url = unbluBintrayReleases
+            credentials {
+                username = bintrayUser
+                password = bintrayPassword
+            }
+        }
+    }
 }

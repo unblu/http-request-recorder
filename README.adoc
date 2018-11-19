@@ -15,7 +15,6 @@
 //tag::header[]
 = {project-name}
 :author: Jeremie Bresson
-:revnumber: 1.0.0
 
 Simple jetty server to record HTTP requests.
 //end::header[]
