@@ -6,27 +6,29 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-	api 'org.reactivestreams:reactive-streams:1.0.2'
-	api 'io.reactivex.rxjava2:rxjava:2.1.7'
-	
-	api 'org.slf4j:slf4j-api:1.7.25'
+    api 'org.reactivestreams:reactive-streams:1.0.2'
+    api 'io.reactivex.rxjava2:rxjava:2.1.7'
 
-	implementation 'org.eclipse.jetty:jetty-server:9.4.7.v20180619'
-	implementation 'com.google.code.gson:gson:2.8.5'
-	
-	testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-	testCompile 'org.assertj:assertj-core:3.11.1'
+    api 'org.slf4j:slf4j-api:1.7.25'
 
-	testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-	testRuntime "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion" //work arround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=538956
-	testRuntime "ch.qos.logback:logback-classic:$logbackVersion"
+    implementation 'org.eclipse.jetty:jetty-server:9.4.7.v20180619'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testCompile 'org.assertj:assertj-core:3.11.1'
+
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    //workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=538956
+    testRuntime "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion"
+    
+    testRuntime "ch.qos.logback:logback-classic:$logbackVersion"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
-	
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -34,15 +36,6 @@ publishing {
 
             from components.java
             artifact sourcesJar
-        }
-    }
-    repositories {
-        maven {
-            url = unbluBintrayReleases
-            credentials {
-                username = bintrayUser
-                password = bintrayPassword
-            }
         }
     }
 }

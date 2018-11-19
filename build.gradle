@@ -1,5 +1,5 @@
 plugins {
-  id 'net.researchgate.release' version '2.6.0'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 allprojects {
@@ -17,6 +17,18 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url = unbluBintrayReleases
+                credentials {
+                    username = project.findProperty("bintrayUser") ?: ""
+                    password = project.findProperty("bintrayPassword") ?: ""
+                }
+            }
+        }
     }
 }
 
