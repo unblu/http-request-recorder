@@ -81,8 +81,6 @@ gitPublish {
 }
 
 release {
-    versionPropertyFile = 'gradle.properties'
-    versionProperties = ['version', 'projectversion']
     buildTasks = ['releaseBuild']
 }
 
