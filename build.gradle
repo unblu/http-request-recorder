@@ -1,4 +1,6 @@
 plugins {
+    id 'org.asciidoctor.convert' version '1.5.9.1'
+    id 'org.ajoberstar.git-publish' version '2.0.0'
     id 'net.researchgate.release' version '2.6.0'
 }
 
@@ -32,6 +34,52 @@ subprojects {
     }
 }
 
+
+def buildDate() {
+    return new Date().format('yyyy-MM-dd')
+}
+
+asciidoctor {
+    sourceDir = file('docs')
+    outputDir = file('build/docs')
+    attributes \
+        'revdate': "${buildDate()}",
+        'project-version' : "$version",
+        'source-highlighter': 'coderay',
+        'imagesdir': '',
+        'toc': 'left',
+        'icons': 'font',
+        'setanchors': 'true',
+        'idprefix': '',
+        'idseparator': '-',
+        'docinfo1': 'true'
+
+    repositories {
+        maven {
+            url "http://dl.bintray.com/jmini/maven/"
+        }
+        jcenter()
+    }
+    dependencies {
+        asciidoctor "com.bsiag.asciidoctorj:gh-edit:3.0.0"
+    }
+}
+
+gitPublish {
+    repoUri = 'git@github.com:' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '.git'
+    branch = 'gh-pages'
+
+    contents {
+        from "${file('build/docs/html5')}"
+    }
+
+    preserve {
+        include '.nojekyll'
+    }
+
+    commitMessage = "Update the 'gh-pages' branch."
+}
+
 release {
     versionPropertyFile = 'gradle.properties'
     versionProperties = ['version', 'projectversion']
@@ -45,6 +93,8 @@ task releaseBuild {
             'core:publish',
             'cli:clean',
             'cli:build',
-            'cli:publish'
+            'cli:publish',
+            'asciidoctor',
+            'gitPublishPush'
     )
 }
