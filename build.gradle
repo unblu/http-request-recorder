@@ -42,17 +42,16 @@ def buildDate() {
 asciidoctor {
     sourceDir = file('docs')
     outputDir = file('build/docs')
-    attributes \
-        'revdate': "${buildDate()}",
-        'project-version' : "$version",
-        'source-highlighter': 'coderay',
-        'imagesdir': '',
-        'toc': 'left',
-        'icons': 'font',
-        'setanchors': 'true',
-        'idprefix': '',
-        'idseparator': '-',
-        'docinfo1': 'true'
+    attributes = ['revdate'           : "${buildDate()}",
+                  'project-version'   : "$version",
+                  'source-highlighter': 'coderay',
+                  'imagesdir'         : '',
+                  'toc'               : 'left',
+                  'icons'             : 'font',
+                  'setanchors'        : 'true',
+                  'idprefix'          : '',
+                  'idseparator'       : '-',
+                  'docinfo1'          : 'true']
 
     repositories {
         maven {
