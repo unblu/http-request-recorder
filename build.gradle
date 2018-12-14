@@ -4,6 +4,10 @@ plugins {
     id 'net.researchgate.release' version '2.6.0'
 }
 
+wrapper {
+    gradleVersion = '5.0'
+}
+
 allprojects {
     apply plugin: 'maven-publish'
 
@@ -44,6 +48,8 @@ asciidoctor {
     outputDir = file('build/docs')
     attributes = ['revdate'           : "${buildDate()}",
                   'project-version'   : "$version",
+                  'gh-repo-owner'     : "$githubRepositoryOwner",
+                  'gh-repo-name'      : "$githubRepositoryName",
                   'source-highlighter': 'coderay',
                   'imagesdir'         : '',
                   'toc'               : 'left',
@@ -60,7 +66,7 @@ asciidoctor {
         jcenter()
     }
     dependencies {
-        asciidoctor "com.bsiag.asciidoctorj:gh-edit:3.0.0"
+        asciidoctor "fr.jmini.asciidoctorj:git-link:3.0.0"
     }
 }
 
