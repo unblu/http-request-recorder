@@ -54,7 +54,7 @@ asciidoctor {
                   'imagesdir'         : '',
                   'toc'               : 'left',
                   'icons'             : 'font',
-                  'setanchors'        : 'true',
+                  'sectanchors'       : 'true',
                   'idprefix'          : '',
                   'idseparator'       : '-',
                   'docinfo1'          : 'true']
