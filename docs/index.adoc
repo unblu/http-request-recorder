@@ -140,8 +140,17 @@ With `server` being a `com.unblu.tools.hrr.core.JettyServer` instance (that is c
 
 [source,java,indent=0]
 ----
-include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=example]
+include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=example-onRequest]
 ----
+In this case onRequest is used, which only emits for events that happen after subscription.
+
+Use getRequest to also get the last previous one:
+
+[source,java,indent=0]
+----
+include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=example-getRequest]
+----
+
 
 With JUnit 5 the server can be managed like this (this is only one example, you might prefer to manage the server globally somewhere else)
 

@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 public class JettyServerTest {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServerTest.class);
@@ -40,13 +41,44 @@ public class JettyServerTest {
 	// end::stop[]
 
 	@Test
-	public void test() throws Exception {
-		// tag::example[]
+	public void testGetRequest() throws Exception {
+		// tag::example-getRequest[]
 		//Access the request recorder:
-		Observable<RequestRecord> observable = server.onRequest();
+		Observable<RequestRecord> observable$ = server.getRequest();
+
+		//Perform a GET Request:
+		HttpURLConnection con = performPinGetRequest();
 
 		//Simple subscription: log the HTTP record as INFO log
-		observable.map(RequestRecordConverter::asLog).subscribe(LOG::info);
+		//Retrieves still the last record
+		observable$.map(RequestRecordConverter::asLog).subscribe(LOG::info);
+
+		//Perform assertions on the server response:
+		int status = con.getResponseCode();
+		assertThat(status).isEqualTo(200);
+		String content = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().collect(Collectors.joining("\n"));
+		assertThat(content).isEqualTo("{ \"status\": \"ok\"}");
+
+		//Perform assertions on the recorded server event:
+		observable$.test().assertSubscribed().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
+			assertThat(record.getMethod()).isEqualTo("GET");
+			assertThat(record.getRequestURI()).isEqualTo("/ping");
+			return true;
+		});
+		// end::example-getRequest[]
+	}
+
+	@Test
+	public void testOnRequest() throws Exception {
+		// tag::example-onRequest[]
+		//Access the request recorder:
+		Observable<RequestRecord> observable$ = server.onRequest();
+
+		//create test observer
+		TestObserver<RequestRecord> testObserver = observable$.test();
+
+		//Simple subscription: log the HTTP record as INFO log
+		observable$.map(RequestRecordConverter::asLog).subscribe(LOG::info);
 
 		//Perform a GET Request:
 		HttpURLConnection con = performPinGetRequest();
@@ -58,12 +90,12 @@ public class JettyServerTest {
 		assertThat(content).isEqualTo("{ \"status\": \"ok\"}");
 
 		//Perform assertions on the recorded server event:
-		observable.test().assertSubscribed().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
+		testObserver.assertSubscribed().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
 			assertThat(record.getMethod()).isEqualTo("GET");
 			assertThat(record.getRequestURI()).isEqualTo("/ping");
 			return true;
 		});
-		// end::example[]
+		// end::example-onRequest[]
 	}
 
 	private HttpURLConnection performPinGetRequest() throws MalformedURLException, IOException, ProtocolException {

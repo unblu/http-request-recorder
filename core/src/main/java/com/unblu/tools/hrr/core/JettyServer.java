@@ -9,14 +9,18 @@ import org.slf4j.LoggerFactory;
 import com.unblu.tools.hrr.core.internal.RecordHandler;
 
 import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observables.ConnectableObservable;
+import io.reactivex.subjects.PublishSubject;
 
 public class JettyServer {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);
 
 	private Server server;
 	private JettyConfig config;
-	private BehaviorSubject<RequestRecord> records;
+	private PublishSubject<RequestRecord> onRecords$;
+	private ConnectableObservable<RequestRecord> records$;
+	private Disposable recordingSubscription;
 
 	public JettyServer() {
 		this(JettyConfig.defaultConfig());
@@ -24,7 +28,8 @@ public class JettyServer {
 
 	public JettyServer(JettyConfig config) {
 		this.config = config;
-		this.records = BehaviorSubject.create();
+		this.onRecords$ = PublishSubject.create();
+		this.records$ = onRecords$.replay(1);
 	}
 
 	public void start() throws Exception {
@@ -34,13 +39,21 @@ public class JettyServer {
 		} else {
 			port = 0;
 		}
+		if (recordingSubscription != null) {
+			recordingSubscription.dispose();
+		}
+		recordingSubscription = records$.connect();
 		server = new Server(port);
-		server.setHandler(new RecordHandler(records));
+		server.setHandler(new RecordHandler(onRecords$));
 		server.start();
 		LOG.info("Server running at: " + getURI().toString());
 	}
 
 	public void stop() throws Exception {
+		if (recordingSubscription != null) {
+			recordingSubscription.dispose();
+			recordingSubscription = null;
+		}
 		if (server != null) {
 			server.stop();
 			server = null;
@@ -53,6 +66,10 @@ public class JettyServer {
 	}
 
 	public Observable<RequestRecord> onRequest() {
-		return records;
+		return onRecords$.hide();
+	}
+
+	public Observable<RequestRecord> getRequest() {
+		return records$.hide();
 	}
 }

@@ -16,13 +16,13 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import com.unblu.tools.hrr.core.RequestRecord;
 
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class RecordHandler extends AbstractHandler {
 
-	private BehaviorSubject<RequestRecord> records$;
+	private Subject<RequestRecord> records$;
 
-	public RecordHandler(BehaviorSubject<RequestRecord> records$) {
+	public RecordHandler(Subject<RequestRecord> records$) {
 		this.records$ = records$;
 	}
 
