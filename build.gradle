@@ -22,19 +22,6 @@ subprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
-    }
-
-    publishing {
-        repositories {
-            maven {
-                url = unbluBintrayReleases
-                credentials {
-                    username = project.findProperty("bintrayUser") ?: ""
-                    password = project.findProperty("bintrayPassword") ?: ""
-                }
-            }
-        }
     }
 }
 
@@ -60,13 +47,10 @@ asciidoctor {
                   'docinfo1'          : 'true']
 
     repositories {
-        maven {
-            url "http://dl.bintray.com/jmini/maven/"
-        }
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        asciidoctor "fr.jmini.asciidoctorj:git-link:3.0.0"
+        asciidoctor "fr.jmini.asciidoctorj:git-link:3.2.1"
     }
 }
 
@@ -93,10 +77,10 @@ task releaseBuild {
     dependsOn(
             'core:clean',
             'core:build',
-            'core:publish',
+            'core:publishToMavenLocal',
             'cli:clean',
             'cli:build',
-            'cli:publish',
+            'cli:publishToMavenLocal',
             'asciidoctor',
             'gitPublishPush'
     )

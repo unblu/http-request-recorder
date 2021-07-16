@@ -3,7 +3,6 @@
 include::{github-readme}[tags=vardef]
 
 :projectpage: https://github.com/{gh-repo-owner}/{gh-repo-name}
-:bintraypage: https://bintray.com/unblu/releases/http-request-recorder
 
 include::{github-readme}[tags=header]
 
@@ -11,7 +10,6 @@ include::{github-readme}[tags=header]
 
 * link:{homepage}[Project home] (this page)
 * link:{projectpage}[GitHub project]
-* link:{bintraypage}[Binaries on Bintray]
 * link:{issues}[Issue tracker]
 
 TIP: Do you want to improve this page? Please git-link:self[edit it on GitHub, edit].
@@ -20,47 +18,15 @@ include::{github-readme}[tags=description]
 
 == Download
 
-Binaries are hosted on bintray: link:{bintraypage}[http-request-recorder].
+Binaries are not hosted online.
 
-You can download a all-in-one jar: link:https://dl.bintray.com/unblu/releases/com/unblu/tools/http-request-recorder-cli/{project-version}/http-request-recorder-cli-{project-version}-all.jar[http-request-recorder-cli-{project-version}-all.jar].
-In the example provided in the "Usage" section, it stored as `hrr.jar` file locally.
-
-The artifacts are hosted on following maven repository:
-
-----
-https://dl.bintray.com/unblu/releases/
-----
+When the release it built it is published to the local maven repository. You can rebuild the release commit locally.
 
 Coordinates:
 
 * `com.unblu.tools:http-request-recorder-core:{project-version}`: core module that can be included in other java application
 * `com.unblu.tools:http-request-recorder-cli:{project-version}`: command line interface module (dependencies not included in the jar)
 * `com.unblu.tools:http-request-recorder-cli:{project-version}:all`: all-in-one jar that can be used to run on the command line
-
-The repository can be added to a maven build with:
-
-[source,xml]
-----
-<repositories>
-    <repository>
-        <id>unblu-releases</id>
-        <url>https://dl.bintray.com/unblu/releases/</url>
-        <releases><enabled>true</enabled></releases>
-        <snapshots><enabled>false</enabled></snapshots>
-    </repository>
-</repositories>
-----
-
-The repository can be added to gradle with:
-
-[source,groovy]
-----
-repositories {
-    maven {
-        url "https://dl.bintray.com/unblu/releases/"
-    }
-}
-----
 
 == Usage
 
