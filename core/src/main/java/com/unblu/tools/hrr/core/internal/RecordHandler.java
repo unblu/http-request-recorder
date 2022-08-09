@@ -29,11 +29,12 @@ public class RecordHandler extends AbstractHandler {
 	@Override
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Record record = convertToRecord(baseRequest);
-		records$.onNext(record);
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_OK);
-		baseRequest.setHandled(true);
 		response.getWriter().println("{ \"status\": \"ok\"}");
+		response.flushBuffer();
+		baseRequest.setHandled(true);
+		records$.onNext(record);
 	}
 
 	private Record convertToRecord(Request request) throws IOException {
