@@ -2,9 +2,6 @@ plugins {
     id 'java-library'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
     api 'org.reactivestreams:reactive-streams:1.0.2'
     api 'io.reactivex.rxjava2:rxjava:2.1.7'
@@ -14,28 +11,43 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-server:9.4.7.v20180619'
     implementation 'com.google.code.gson:gson:2.8.5'
 
-    testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testCompile 'org.assertj:assertj-core:3.11.1'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation 'org.assertj:assertj-core:3.11.1'
 
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     //workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=538956
-    testRuntime "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion"
 
-    testRuntime "ch.qos.logback:logback-classic:$logbackVersion"
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+    testRuntimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            pom {
+                name = 'HTTP Request Recorder - core'
+                description = 'Simple jetty server to record HTTP requests (core)'
+                packaging = 'jar'
+                url = 'https://' + "$githubRepositoryOwner" + '.github.io/' + "$githubRepositoryName" + '/'
+                licenses {
+                    license {
+                        name = 'Eclipse Public License 2.0'
+                        url = 'https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html'
+                    }
+                }
+                developers {
+                    developer {
+                        url = 'https://github.com/orgs/' + "$githubRepositoryOwner" + '/people'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '.git'
+                    developerConnection = 'scm:git:https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '.git'
+                    url = 'https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '/'
+                }
+            }
             artifactId = 'http-request-recorder-core'
-
             from components.java
-            artifact sourcesJar
         }
     }
 }

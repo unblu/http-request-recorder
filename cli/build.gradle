@@ -1,40 +1,49 @@
 plugins {
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '4.0.0'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 mainClassName = 'com.unblu.tools.hrr.cli.Main'
 
 dependencies {
-    compile 'info.picocli:picocli:3.5.2'
-    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    implementation 'info.picocli:picocli:3.5.2'
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
 
-    compile project(':core')
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+    implementation project(':core')
 }
 
 shadowJar {
-    archiveName = "hrr.jar"
+    archiveFileName = 'hrr.jar'
+    archiveClassifier = 'all'
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'http-request-recorder-cli'
-
-            from components.java
-            artifact sourcesJar
-
-            artifact shadowJar {
-                classifier = "all"
+            pom {
+                name = 'HTTP Request Recorder - cli'
+                description = 'Simple jetty server to record HTTP requests (cli)'
+                packaging = 'jar'
+                url = 'https://' + "$githubRepositoryOwner" + '.github.io/' + "$githubRepositoryName" + '/'
+                licenses {
+                    license {
+                        name = 'Eclipse Public License 2.0'
+                        url = 'https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html'
+                    }
+                }
+                developers {
+                    developer {
+                        url = 'https://github.com/orgs/' + "$githubRepositoryOwner" + '/people'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '.git'
+                    developerConnection = 'scm:git:https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '.git'
+                    url = 'https://github.com/' + "$githubRepositoryOwner" + '/' + "$githubRepositoryName" + '/'
+                }
             }
+            artifactId = 'http-request-recorder-cli'
+            from components.java
         }
     }
 }

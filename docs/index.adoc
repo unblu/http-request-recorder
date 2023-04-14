@@ -3,6 +3,16 @@
 include::{github-readme}[tags=vardef]
 
 :projectpage: https://github.com/{gh-repo-owner}/{gh-repo-name}
+:maven-group-id: com.unblu.tools
+:maven-artifact-core: http-request-recorder-core
+:maven-artifact-cli: http-request-recorder-cli
+ifndef::artifacts-version[]
+:artifacts-version-mvn: ${last-stable-version}
+endif::[]
+ifdef::artifacts-version[]
+:artifacts-version-mvn: {artifacts-version}
+endif::[]
+
 
 include::{github-readme}[tags=header]
 
@@ -18,15 +28,64 @@ include::{github-readme}[tags=description]
 
 == Download
 
-Binaries are not hosted online.
+Binaries are hosted on maven central.
 
-When the release it built it is published to the local maven repository. You can rebuild the release commit locally.
+=== core
 
-Coordinates:
+[source, xml, subs="verbatim,attributes"]
+.Maven coordinates of the 'core' project  (xml notation)
+----
+<dependency>
+  <groupId>{maven-group-id}</groupId>
+  <artifactId>{maven-artifact-core}</artifactId>
+  <version>{artifacts-version-mvn}</version>
+</dependency>
+----
 
-* `com.unblu.tools:http-request-recorder-core:{project-version}`: core module that can be included in other java application
-* `com.unblu.tools:http-request-recorder-cli:{project-version}`: command line interface module (dependencies not included in the jar)
-* `com.unblu.tools:http-request-recorder-cli:{project-version}:all`: all-in-one jar that can be used to run on the command line
+[source, gradle, subs="verbatim,attributes"]
+.Maven coordinates of the 'core' project (single line notation)
+----
+"{maven-group-id}:{maven-artifact-core}:{artifacts-version-mvn}"
+----
+
+=== cli
+
+[source, xml, subs="verbatim,attributes"]
+.Maven coordinates of the 'cli' project  (xml notation)
+----
+<dependency>
+  <groupId>{maven-group-id}</groupId>
+  <artifactId>{maven-artifact-cli}</artifactId>
+  <version>{artifacts-version-mvn}</version>
+</dependency>
+----
+
+[source, gradle, subs="verbatim,attributes"]
+.Maven coordinates of the 'cli' project (single line notation)
+----
+"{maven-group-id}:{maven-artifact-cli}:{artifacts-version-mvn}"
+----
+
+=== cli (fat jar)
+
+A standalone jar (containing the dependencies) is also published:
+
+[source, xml, subs="verbatim,attributes"]
+.Maven coordinates of the 'cli fat jar'  (xml notation)
+----
+<dependency>
+  <groupId>{maven-group-id}</groupId>
+  <artifactId>{maven-artifact-cli}</artifactId>
+  <version>{artifacts-version-mvn}</version>
+  <classifier>all</classifier>
+</dependency>
+----
+
+[source, gradle, subs="verbatim,attributes"]
+.Maven coordinates of the 'cli fat jar' (single line notation)
+----
+"{maven-group-id}:{maven-artifact-cli}:{artifacts-version-mvn}:all"
+----
 
 == Usage
 
