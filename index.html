@@ -533,7 +533,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>HTTP Request Recorder</h1>
 <div class="details">
 <span id="author" class="author">Jeremie Bresson</span><br>
-<span id="revnumber">version 2.0.2,</span>
+<span id="revnumber">version 3.0.0,</span>
 <span id="revdate">2023-04-14</span>
 </div>
 <div id="toc" class="toc2">
@@ -636,14 +636,14 @@ Recorded requests are available in memory (as RxJava stream), can be printed in 
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>com.unblu.tools<span class="tag">&lt;/groupId&gt;</span>
   <span class="tag">&lt;artifactId&gt;</span>http-request-recorder-core<span class="tag">&lt;/artifactId&gt;</span>
-  <span class="tag">&lt;version&gt;</span>2.0.2<span class="tag">&lt;/version&gt;</span>
+  <span class="tag">&lt;version&gt;</span>3.0.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Maven coordinates of the 'core' project (single line notation)</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">&quot;com.unblu.tools:http-request-recorder-core:2.0.2&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="string"><span class="delimiter">&quot;</span><span class="content">com.unblu.tools:http-request-recorder-core:3.0.0</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -655,14 +655,14 @@ Recorded requests are available in memory (as RxJava stream), can be printed in 
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>com.unblu.tools<span class="tag">&lt;/groupId&gt;</span>
   <span class="tag">&lt;artifactId&gt;</span>http-request-recorder-cli<span class="tag">&lt;/artifactId&gt;</span>
-  <span class="tag">&lt;version&gt;</span>2.0.2<span class="tag">&lt;/version&gt;</span>
+  <span class="tag">&lt;version&gt;</span>3.0.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Maven coordinates of the 'cli' project (single line notation)</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">&quot;com.unblu.tools:http-request-recorder-cli:2.0.2&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="string"><span class="delimiter">&quot;</span><span class="content">com.unblu.tools:http-request-recorder-cli:3.0.0</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -677,7 +677,7 @@ Recorded requests are available in memory (as RxJava stream), can be printed in 
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>com.unblu.tools<span class="tag">&lt;/groupId&gt;</span>
   <span class="tag">&lt;artifactId&gt;</span>http-request-recorder-cli<span class="tag">&lt;/artifactId&gt;</span>
-  <span class="tag">&lt;version&gt;</span>2.0.2<span class="tag">&lt;/version&gt;</span>
+  <span class="tag">&lt;version&gt;</span>3.0.0<span class="tag">&lt;/version&gt;</span>
   <span class="tag">&lt;classifier&gt;</span>all<span class="tag">&lt;/classifier&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
@@ -685,7 +685,7 @@ Recorded requests are available in memory (as RxJava stream), can be printed in 
 <div class="listingblock">
 <div class="title">Maven coordinates of the 'cli fat jar' (single line notation)</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">&quot;com.unblu.tools:http-request-recorder-cli:2.0.2:all&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="gradle">&quot;com.unblu.tools:http-request-recorder-cli:3.0.0:all&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -811,7 +811,7 @@ assertThat(status).isEqualTo(<span class="integer">200</span>);
 assertThat(content).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">{ </span><span class="char">\&quot;</span><span class="content">status</span><span class="char">\&quot;</span><span class="content">: </span><span class="char">\&quot;</span><span class="content">ok</span><span class="char">\&quot;</span><span class="content">}</span><span class="delimiter">&quot;</span></span>);
 
 <span class="comment">//Perform assertions on the recorded server event:</span>
-testObserver.assertSubscribed().assertNoErrors().assertValueCount(<span class="integer">1</span>).assertValueAt(<span class="integer">0</span>, record -&gt; {
+testObserver.assertNoErrors().assertValueCount(<span class="integer">1</span>).assertValueAt(<span class="integer">0</span>, record -&gt; {
         assertThat(record.getMethod()).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>);
         assertThat(record.getRequestURI()).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">/ping</span><span class="delimiter">&quot;</span></span>);
         <span class="keyword">return</span> <span class="predefined-constant">true</span>;
@@ -843,7 +843,7 @@ assertThat(status).isEqualTo(<span class="integer">200</span>);
 assertThat(content).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">{ </span><span class="char">\&quot;</span><span class="content">status</span><span class="char">\&quot;</span><span class="content">: </span><span class="char">\&quot;</span><span class="content">ok</span><span class="char">\&quot;</span><span class="content">}</span><span class="delimiter">&quot;</span></span>);
 
 <span class="comment">//Perform assertions on the recorded server event:</span>
-observable<span class="error">$</span>.test().assertSubscribed().assertNoErrors().assertValueCount(<span class="integer">1</span>).assertValueAt(<span class="integer">0</span>, record -&gt; {
+observable<span class="error">$</span>.test().assertNoErrors().assertValueCount(<span class="integer">1</span>).assertValueAt(<span class="integer">0</span>, record -&gt; {
         assertThat(record.getMethod()).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>);
         assertThat(record.getRequestURI()).isEqualTo(<span class="string"><span class="delimiter">&quot;</span><span class="content">/ping</span><span class="delimiter">&quot;</span></span>);
         <span class="keyword">return</span> <span class="predefined-constant">true</span>;
@@ -984,8 +984,8 @@ ssh-add ~/.ssh/id_rsa</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.2<br>
-Last updated 2023-04-14 18:13:51 +0200
+Version 3.0.0<br>
+Last updated 2023-04-14 18:20:42 +0200
 </div>
 </div>
 </body>
