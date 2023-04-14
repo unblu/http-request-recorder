@@ -42,7 +42,7 @@ Binaries are hosted on maven central.
 </dependency>
 ----
 
-[source, gradle, subs="verbatim,attributes"]
+[source, groovy, subs="verbatim,attributes"]
 .Maven coordinates of the 'core' project (single line notation)
 ----
 "{maven-group-id}:{maven-artifact-core}:{artifacts-version-mvn}"
@@ -60,7 +60,7 @@ Binaries are hosted on maven central.
 </dependency>
 ----
 
-[source, gradle, subs="verbatim,attributes"]
+[source, groovy, subs="verbatim,attributes"]
 .Maven coordinates of the 'cli' project (single line notation)
 ----
 "{maven-group-id}:{maven-artifact-cli}:{artifacts-version-mvn}"

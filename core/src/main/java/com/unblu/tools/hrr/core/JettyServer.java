@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.unblu.tools.hrr.core.internal.RecordHandler;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observables.ConnectableObservable;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.observables.ConnectableObservable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class JettyServer {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);

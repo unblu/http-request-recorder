@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.observers.TestObserver;
 
 public class JettyServerTest {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServerTest.class);
@@ -60,7 +60,7 @@ public class JettyServerTest {
 		assertThat(content).isEqualTo("{ \"status\": \"ok\"}");
 
 		//Perform assertions on the recorded server event:
-		observable$.test().assertSubscribed().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
+		observable$.test().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
 			assertThat(record.getMethod()).isEqualTo("GET");
 			assertThat(record.getRequestURI()).isEqualTo("/ping");
 			return true;
@@ -90,7 +90,7 @@ public class JettyServerTest {
 		assertThat(content).isEqualTo("{ \"status\": \"ok\"}");
 
 		//Perform assertions on the recorded server event:
-		testObserver.assertSubscribed().assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
+		testObserver.assertNoErrors().assertValueCount(1).assertValueAt(0, record -> {
 			assertThat(record.getMethod()).isEqualTo("GET");
 			assertThat(record.getRequestURI()).isEqualTo("/ping");
 			return true;
