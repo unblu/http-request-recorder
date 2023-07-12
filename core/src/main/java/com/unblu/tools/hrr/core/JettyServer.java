@@ -12,6 +12,13 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.observables.ConnectableObservable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
+import java.io.IOException;
+import java.util.function.BiConsumer;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 
 public class JettyServer {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);
@@ -32,6 +39,31 @@ public class JettyServer {
 		this.records$ = onRecords$.replay(1);
 	}
 
+	/**
+	 * Starts the server using a custom handler for the requests. When starting
+	 * the server this way, the server will not emit on {@link #onRequest()} nor on {@link #getRequest()}.
+	 * 
+	 * @param requestHandler the handler
+	 * @throws Exception 
+	 */
+	public void start(final BiConsumer<Request, HttpServletResponse> requestHandler) throws Exception {
+		int port;
+		if (config.getPort().isPresent()) {
+			port = config.getPort().get().intValue();
+		} else {
+			port = 0;
+		}
+		server = new Server(port);
+		server.setHandler(new AbstractHandler() {
+			@Override
+			public void handle(final String target, final Request baseRequest, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+				requestHandler.accept(baseRequest, response);
+			}
+		});
+		server.start();
+		LOG.info("Server running at: {}", getURI().toString());
+	}
+	
 	public void start() throws Exception {
 		int port;
 		if (config.getPort().isPresent()) {
