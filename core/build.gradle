@@ -8,7 +8,7 @@ dependencies {
 
     api 'org.slf4j:slf4j-api:1.7.25'
 
-    implementation 'org.eclipse.jetty:jetty-server:9.4.7.v20180619'
+    implementation 'org.eclipse.jetty:jetty-server:11.0.18'
     implementation 'com.google.code.gson:gson:2.8.5'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
