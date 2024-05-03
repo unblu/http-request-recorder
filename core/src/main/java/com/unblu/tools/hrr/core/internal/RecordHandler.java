@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.subjects.Subject;
 
 public class RecordHandler extends AbstractHandler {
 
-	private Subject<RequestRecord> records$;
+	private final Subject<RequestRecord> records$;
 
 	public RecordHandler(Subject<RequestRecord> records$) {
 		this.records$ = records$;
@@ -34,7 +34,13 @@ public class RecordHandler extends AbstractHandler {
 		response.getWriter().println("{ \"status\": \"ok\"}");
 		response.flushBuffer();
 		baseRequest.setHandled(true);
-		records$.onNext(record);
+		try {
+			records$.onNext(record);
+		} catch (final Throwable t) {
+			System.err.println("Failed to handle request! Error: " + t.getMessage());
+			t.printStackTrace();
+			records$.onError(t);
+		}
 	}
 
 	private Record convertToRecord(Request request) throws IOException {

@@ -1,31 +1,30 @@
 package com.unblu.tools.hrr.core;
 
-import java.net.URI;
-
-import org.eclipse.jetty.server.Server;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.unblu.tools.hrr.core.internal.RecordHandler;
-
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.observables.ConnectableObservable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
-import java.io.IOException;
-import java.util.function.BiConsumer;
+import io.reactivex.rxjava3.subjects.Subject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.function.BiConsumer;
 
 public class JettyServer {
 	private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);
 
 	private Server server;
 	private JettyConfig config;
-	private PublishSubject<RequestRecord> onRecords$;
+	private Subject<RequestRecord> onRecords$;
 	private ConnectableObservable<RequestRecord> records$;
 	private Disposable recordingSubscription;
 
@@ -35,7 +34,7 @@ public class JettyServer {
 
 	public JettyServer(JettyConfig config) {
 		this.config = config;
-		this.onRecords$ = PublishSubject.create();
+		this.onRecords$ = PublishSubject.<RequestRecord> create().toSerialized();
 		this.records$ = onRecords$.replay(1);
 	}
 
