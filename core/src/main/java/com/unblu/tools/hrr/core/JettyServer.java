@@ -85,23 +85,27 @@ public class JettyServer {
 		LOG.info("Server running at: " + getURI().toString());
 	}
 
+	public void stop() throws Exception {
+		stop(null);
+	}
+
 	/**
-	 * Set a graceful stop time. The StatisticsHandler must be configured so that
-	 * open connections can be tracked for a graceful shutdown.
+	 * Stops the server setting a specific graceful stop time. The StatisticsHandler
+	 * must be configured so that open connections can be tracked for a graceful
+	 * shutdown.
 	 * 
 	 * @param stopTimeout
 	 *            the graceful stop time
 	 */
-	public void setStopTimeout(long stopTimeout) {
-		server.setStopTimeout(stopTimeout);
-	}
-
-	public void stop() throws Exception {
+	public void stop(Long stopTimeout) throws Exception {
 		if (recordingSubscription != null) {
 			recordingSubscription.dispose();
 			recordingSubscription = null;
 		}
 		if (server != null) {
+			if (stopTimeout != null) {
+				server.setStopTimeout(stopTimeout);
+			}
 			server.stop();
 			server = null;
 			LOG.info("Server stoped");
