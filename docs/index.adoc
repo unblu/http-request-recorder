@@ -26,6 +26,8 @@ TIP: Do you want to improve this page? Please git-link:self[edit it on GitHub, e
 
 include::{github-readme}[tags=description]
 
+include::{github-readme}[tags=requirements]
+
 == Download
 
 Binaries are hosted on maven central.
@@ -189,6 +191,17 @@ include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tag
 .Stop the server after all tests in the class.
 ----
 include::../core/src/test/java/com/unblu/tools/hrr/core/JettyServerTest.java[tags=stop]
+----
+
+Instead of recording, the server can also be started with a custom handler, which receives each request as a `jakarta.servlet.http.HttpServletRequest` together with its `HttpServletResponse`.
+The request is marked as handled once the handler returns.
+In this mode nothing is emitted on `onRequest()` nor on `getRequest()`.
+
+[source,java,indent=0]
+----
+server.start((request, response) -> {
+    response.setStatus(204);
+});
 ----
 
 == Development
