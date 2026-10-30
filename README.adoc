@@ -27,6 +27,18 @@ It is based on link:https://www.eclipse.org/jetty/[Eclipse Jetty] and runs on th
 Recorded requests are available in memory (as RxJava stream), can be printed in the console or stored as JSON file on the disk.
 
 //end::description[]
+
+//tag::requirements[]
+== Requirements
+
+Version 5.x requires Java 17 or newer.
+It is built on Jetty 12 with the `ee9` environment (Jakarta Servlet 5.0).
+Use 4.x for Java 11 and Jetty 11.
+
+When upgrading from 4.x, note that the signature of `JettyServer.start(BiConsumer)` changed:
+the custom handler now receives a `jakarta.servlet.http.HttpServletRequest` instead of the Jetty `Request`, and the request is marked as handled by the server once the handler returns, so calling `setHandled(true)` is no longer necessary.
+//end::requirements[]
+
 Read more on the link:{homepage}[project home page].
 
 //tag::contact-section[]

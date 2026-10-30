@@ -8,9 +8,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.ee9.nested.AbstractHandler;
+import org.eclipse.jetty.ee9.nested.ContextHandler;
+import org.eclipse.jetty.ee9.nested.Handler;
+import org.eclipse.jetty.ee9.nested.Request;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,24 +46,25 @@ public class JettyServer {
 	/**
 	 * Starts the server using a custom handler for the requests. When starting the
 	 * server this way, the server will not emit on {@link #onRequest()} nor on
-	 * {@link #getRequest()}.
+	 * {@link #getRequest()}. Every request is marked as handled once the handler
+	 * returns.
 	 * 
 	 * @param requestHandler
 	 *            the handler
 	 * @throws Exception
 	 */
-	public void start(final BiConsumer<Request, HttpServletResponse> requestHandler) throws Exception {
+	public void start(final BiConsumer<HttpServletRequest, HttpServletResponse> requestHandler) throws Exception {
 		int port;
 		if (config.getPort().isPresent()) {
 			port = config.getPort().get().intValue();
 		} else {
 			port = 0;
 		}
-		server = new Server(port);
-		server.setHandler(new AbstractHandler() {
+		server = createServer(port, new AbstractHandler() {
 			@Override
 			public void handle(final String target, final Request baseRequest, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
-				requestHandler.accept(baseRequest, response);
+				requestHandler.accept(request, response);
+				baseRequest.setHandled(true);
 			}
 		});
 		server.start();
@@ -79,10 +82,17 @@ public class JettyServer {
 			recordingSubscription.dispose();
 		}
 		recordingSubscription = records$.connect();
-		server = new Server(port);
-		server.setHandler(new RecordHandler(onRecords$));
+		server = createServer(port, new RecordHandler(onRecords$));
 		server.start();
 		LOG.info("Server running at: " + getURI().toString());
+	}
+
+	private static Server createServer(int port, Handler handler) {
+		Server server = new Server(port);
+		ContextHandler context = new ContextHandler("/");
+		context.setHandler(handler);
+		server.setHandler(context);
+		return server;
 	}
 
 	public void stop() throws Exception {
