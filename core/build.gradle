@@ -3,23 +3,23 @@ plugins {
 }
 
 dependencies {
-    api 'org.reactivestreams:reactive-streams:1.0.2'
-    api 'io.reactivex.rxjava3:rxjava:3.1.6'
+    api libs.reactive.streams
+    api libs.rxjava
 
-    api 'org.slf4j:slf4j-api:2.0.17'
+    api libs.slf4j.api
 
-    api 'org.eclipse.jetty:jetty-server:12.1.14'
-    api 'org.eclipse.jetty.ee9:jetty-ee9-nested:12.1.14'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    api libs.jetty.server
+    api libs.jetty.ee9.nested
+    implementation libs.gson
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testImplementation 'org.assertj:assertj-core:3.11.1'
+    testImplementation libs.junit.jupiter.api
+    testImplementation libs.assertj.core
 
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testRuntimeOnly libs.junit.jupiter.engine
     //workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=538956
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-migrationsupport:$junitVersion"
+    testRuntimeOnly libs.junit.jupiter.migrationsupport
 
-    testRuntimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
+    testRuntimeOnly libs.logback.classic
 }
 
 publishing {

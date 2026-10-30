@@ -240,6 +240,11 @@ Perform a release:
 ./gradlew release -Prelease.useAutomaticVersion=true
 ----
 
+The artifacts are staged in `build/staging-deploy` by `./gradlew publish`, then signed and uploaded to Maven Central by JReleaser (`./gradlew jreleaserDeploy`).
+JReleaser reads its credentials (Maven Central token, GPG key, GitHub token) from the environment or from `~/.jreleaser/config.toml`, never from this repository.
+
+Gradle needs Java 17 or newer to run.
+
 ==== Using ssh-agent
 
 Some tasks requires to push into the distant git repository (release task or updating the `gh-pages` branch).
