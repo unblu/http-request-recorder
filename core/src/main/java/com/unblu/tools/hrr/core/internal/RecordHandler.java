@@ -11,8 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.ee9.nested.AbstractHandler;
+import org.eclipse.jetty.ee9.nested.Request;
 
 import com.unblu.tools.hrr.core.RequestRecord;
 
@@ -28,7 +28,7 @@ public class RecordHandler extends AbstractHandler {
 
 	@Override
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		Record record = convertToRecord(baseRequest);
+		Record record = convertToRecord(request);
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.getWriter().println("{ \"status\": \"ok\"}");
@@ -43,7 +43,7 @@ public class RecordHandler extends AbstractHandler {
 		}
 	}
 
-	private Record convertToRecord(Request request) throws IOException {
+	private Record convertToRecord(HttpServletRequest request) throws IOException {
 		Record record = new Record();
 		record.setMethod(request.getMethod());
 		record.setRequestURI(request.getRequestURI());

@@ -9,9 +9,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.function.BiConsumer;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.eclipse.jetty.server.Request;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class JettyServerCustomHandlerTest {
 	BehaviorSubject<Record> requests$ = BehaviorSubject.create();
 	TestObserver<Record> testObserver$ = requests$.test();
 
-	BiConsumer<Request, HttpServletResponse> requestHandler = (req, resp) -> {
+	BiConsumer<HttpServletRequest, HttpServletResponse> requestHandler = (req, resp) -> {
 	    try {
 		LOG.info("Request served: "+req.getMethod()+" "+req.getRequestURI());
 		Record record = new Record();
@@ -49,7 +49,6 @@ public class JettyServerCustomHandlerTest {
 		record.setRequestURI(req.getRequestURI());
 		requests$.onNext(record);
 		
-		req.setHandled(true);
 		resp.flushBuffer();
 		resp.getOutputStream().close();
 	    } catch (IOException ex) {

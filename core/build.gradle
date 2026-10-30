@@ -6,9 +6,10 @@ dependencies {
     api 'org.reactivestreams:reactive-streams:1.0.2'
     api 'io.reactivex.rxjava3:rxjava:3.1.6'
 
-    api 'org.slf4j:slf4j-api:1.7.25'
+    api 'org.slf4j:slf4j-api:2.0.17'
 
-    implementation 'org.eclipse.jetty:jetty-server:11.0.18'
+    api 'org.eclipse.jetty:jetty-server:12.1.14'
+    api 'org.eclipse.jetty.ee9:jetty-ee9-nested:12.1.14'
     implementation 'com.google.code.gson:gson:2.8.5'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
